@@ -23,7 +23,7 @@ class Display
     #debugger
   end
 
-  def get_move
+  def select_square
       move_cursor
       cursor
   end
@@ -60,13 +60,15 @@ class Display
   end
 
   def render_square(string, position)
+    string = " #{string}  "
     if position == cursor
-      print string.colorize(:background => :yellow)
+      string = string.colorize(:background => :yellow)
     elsif alternated_color?(position)
-      print string.colorize(:background => :light_blue)
+      string = string.colorize(:background => :red)
     else
-      print string.colorize(:background => :red)
+      string = string.colorize(:background => :blue)
     end
+    print string
   end
 
   def alternated_color?(position)
