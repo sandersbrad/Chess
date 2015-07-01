@@ -46,7 +46,15 @@ class Board
     lines
   end
 
-  def out_of_bounds?(position)
+  def checkmate?(color)
+
+  end
+
+  def check?(color)
+
+  end
+
+  def in_bounds?(position)
     position.all? { |coord| coord.between?(0, grid.length-1) }
   end
 
@@ -74,6 +82,10 @@ class Board
 
   def piece_at(position)
     self[position]
+  end
+
+  def occupied?(position)
+    piece_at(position).piece?
   end
 
   def move_piece(position, new_position)

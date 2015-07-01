@@ -19,9 +19,22 @@ class Piece
     true
   end
 
+
   def move_to(new_position)
     board.move_piece(position, new_position)
-    @position = new_position
+    self.position = new_position
+    self.moved = true
+  end
+
+  def valid_move?(position)
+
+  end
+
+  def valid_moves(potential_moves)
+    in_bound_moves = potential_moves.select do |move|
+      board.in_bounds?(move)
+    end
+
   end
 
 
@@ -29,6 +42,10 @@ end
 
 class SlidingPiece < Piece
 
+
+end
+
+class SteppingPiece
 
 end
 
@@ -76,6 +93,10 @@ class Pawn < Piece
 
   def to_s
     color == :black ? "\u265F" : "\u2659"
+  end
+
+  def potential_moves
+    
   end
 
 end

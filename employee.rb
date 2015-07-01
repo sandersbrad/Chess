@@ -31,7 +31,7 @@ class Manager < Employee
         accum + employee.bonus(multiplier)
       end
     end
-  endddsa
+  end
 
   def add_employees(employees)
     @employees = employees
