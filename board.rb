@@ -1,5 +1,6 @@
 require_relative 'empty_square.rb'
 require_relative 'piece.rb'
+require_relative 'error.rb'
 
 class Board
   WHITE_POSITIONS = {
@@ -46,12 +47,70 @@ class Board
     lines
   end
 
-  def checkmate?(color)
-
+  def duped_board
+    deep_dup = self.dup #Note all tiles are currently references
+    deep_dup.each_with_index do |row, row_index|
+      row.each_with_index do |tile, col_index|
+        shallow_dup[row_index, col_index] = tile.dup(deep_dup)
+      end
+    end
+    deep_dup
   end
 
-  def check?(color)
+  def move(position, new_position, color)
+    if color != board[position].color
+      raise NotYourPiece
+    elsif !valid_move?(position, new_position, color)
+      raise InvalidMove
+    else
+      move_piece!(position, new_position, color)
+    end
+  end
 
+  def valid_move?(position, new_position, color)
+    dup = duped_board
+    dup.move_piece!(position, new_position)
+
+    !dup.in_check?(color)
+  end
+
+  def checkmate?(color)
+    return false unless in_check?(color)
+    current_color_pieces = find_pieces(color)
+
+    current_color_pieces.each do |piece|
+      piece.possible_moves.each do |possible_move|
+        position, new_position = possible_move
+        return false if valid_move?(position, new_position, color)
+      end
+    end
+
+    true
+  end
+
+  def find_pieces(color)
+    grid.flatten.select { |tile| tile.piece? && tile.color == color }
+  end
+
+  def find_king(color)
+    find_pieces(color).select { |piece| piece.is_a?(King) }.first
+  end
+
+  def in_check?(color)
+    my_king = find_king(color)
+
+    opponent_pieces = find_pieces(opponent(color))
+
+    opponent_pieces.each do |piece|
+      piece.possible_moves.each do |move|
+        return true if move == my_king.position
+      end
+    end
+    false
+  end
+
+  def opponent(color)
+    color == :white ? :black : :white
   end
 
   def in_bounds?(position)
@@ -88,10 +147,10 @@ class Board
     piece_at(position).piece?
   end
 
-  def move_piece(position, new_position)
+  def move_piece!(position, new_position)
     current_piece = piece_at(position)
-    self[position] = EmptySquare.new
-    self[new_position] = current_piece
+    piece_at(position), piece_at(new_position) = EmptySquare.new, current_piece
+    current_piece.update_position(new_position)
   end
 
 end

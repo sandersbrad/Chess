@@ -87,6 +87,10 @@ class Display
 
   def debug_mode_print
     puts "Cursor: #{cursor.inspect}"
+    puts "Current Piece Possible Moves: #{board[cursor].possible_moves}"
+    puts "Black in check?: #{board.in_check?(:black)}"
+    puts "White in check?: #{board.in_check?(:white)}"
+    puts "Checkmate?: #{board.check_mate?(:white) || board.check_mate?(:black)}"
   end
 end
 

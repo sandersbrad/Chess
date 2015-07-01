@@ -19,19 +19,21 @@ class Piece
     true
   end
 
+  def dup(duped_board)
+    self.class.new(position, color, duped_board)
+  end
 
-  def move_to(new_position)
-    board.move_piece(position, new_position)
+  def update_position(new_position)
     self.position = new_position
     self.moved = true
   end
 
-  def valid_move?(position)
+  def possible_move?(position)
 
   end
 
-  def valid_moves(potential_moves)
-    in_bound_moves = potential_moves.select do |move|
+  def possible_moves(moves_in_range) #rewrite to not accept an argument
+    in_bound_moves = moves_in_range.select do |move|
       board.in_bounds?(move)
     end
 
@@ -96,7 +98,7 @@ class Pawn < Piece
   end
 
   def potential_moves
-    
+
   end
 
 end

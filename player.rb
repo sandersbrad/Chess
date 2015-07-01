@@ -20,7 +20,7 @@ class Player
     destination = display.select_square
 
     piece = board.piece_at(position)
-    if piece.valid_move?(destination)
+    if board.move(position, destination, color)
       puts "Invalid move"
       next
     end
