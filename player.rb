@@ -4,8 +4,8 @@ require_relative 'display'
 
 class Player
 
-  attr_accessor :display
-  attr_reader :board
+  attr_accessor :display, :e
+  attr_reader :board, :color, :name
 
   def initialize(name, color, display, board)
     @name = name
@@ -14,21 +14,17 @@ class Player
     @board = board
   end
 
+  def ==(other_player)
+    self.name == other_player.name
+  end
+
   def take_turn
-    5.times do
     position = display.select_square
     destination = display.select_square
 
     piece = board.piece_at(position)
-    if board.move(position, destination, color)
-      puts "Invalid move"
-      next
-    end
-
-    piece.move_to(destination)
-    end
+    board.move(position, destination, color)
   end
-
 end
 
 if __FILE__ == $PROGRAM_NAME

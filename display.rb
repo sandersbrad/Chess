@@ -13,13 +13,15 @@ class Display
     "\r" => [0, 0]
   }
 
-  attr_reader :board, :debug_mode
-  attr_accessor :cursor
+  attr_reader :board, :debug_mode, :game
+  attr_accessor :cursor, :error_message
 
-  def initialize(board)
+  def initialize(board, game)
     @board = board
+    @game = game
     @cursor = [0,0]
     @debug_mode = true
+    @error_message = nil
     #debugger
   end
 
@@ -29,6 +31,7 @@ class Display
   end
 
   def render
+    puts error_message if error_message
     chars_to_render = board.render
     chars_to_render.each_with_index do |row, row_index|
       row.each_with_index do |string, col_index|
@@ -90,7 +93,10 @@ class Display
     puts "Current Piece Possible Moves: #{board[cursor].possible_moves}"
     puts "Black in check?: #{board.in_check?(:black)}"
     puts "White in check?: #{board.in_check?(:white)}"
-    puts "Checkmate?: #{board.check_mate?(:white) || board.check_mate?(:black)}"
+    puts "Checkmate?: #{board.checkmate?(:white) || board.checkmate?(:black)}"
+    puts "Object Class: #{board[cursor].class}"
+    puts "Current Player: #{game.current_player.name}"
+
   end
 end
 

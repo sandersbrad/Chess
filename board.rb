@@ -1,6 +1,7 @@
 require_relative 'empty_square.rb'
 require_relative 'piece.rb'
 require_relative 'error.rb'
+require 'byebug'
 
 class Board
   WHITE_POSITIONS = {
@@ -23,10 +24,10 @@ class Board
 
   attr_accessor :grid
 
-  def initialize
+  def initialize(setup = true)
     @grid = Array.new(8) {Array.new(8) { EmptySquare.new } }
-    set_up_pieces(:white)
-    set_up_pieces(:black)
+    set_up_pieces(:white) if setup
+    set_up_pieces(:black) if setup
   end
 
   def [](position)
@@ -39,38 +40,47 @@ class Board
     self.grid[row][col] = value
   end
 
+  def inspect
+    grid.each do |row|
+      row.each do |tile|
+        print tile.class
+      end
+      puts
+    end
+    return nil
+  end
+
   def render
     lines = []
     grid.each do |row|
-      lines << row.map {|square| square.to_s }
+      lines << row.map {|square| square.symbol }
     end
     lines
   end
 
   def duped_board
-    deep_dup = self.dup #Note all tiles are currently references
-    deep_dup.each_with_index do |row, row_index|
+    deep_dup = Board.new(false)
+    deep_dup.grid.each_with_index do |row, row_index|
       row.each_with_index do |tile, col_index|
-        shallow_dup[row_index, col_index] = tile.dup(deep_dup)
+        deep_dup[[row_index, col_index]] = tile.dup(deep_dup)
       end
     end
     deep_dup
   end
 
   def move(position, new_position, color)
-    if color != board[position].color
-      raise NotYourPiece
+    if color != self[position].color
+      raise NotYourPiece.new "That is not your piece, idiot!"
     elsif !valid_move?(position, new_position, color)
-      raise InvalidMove
+      raise InvalidMove.new "You cannot put yourself in check!"
     else
-      move_piece!(position, new_position, color)
+      move_piece!(position, new_position)
     end
   end
 
   def valid_move?(position, new_position, color)
     dup = duped_board
     dup.move_piece!(position, new_position)
-
     !dup.in_check?(color)
   end
 
@@ -149,11 +159,9 @@ class Board
 
   def move_piece!(position, new_position)
     current_piece = piece_at(position)
-    piece_at(position), piece_at(new_position) = EmptySquare.new, current_piece
+    self[new_position] = current_piece
+    self[position] = EmptySquare.new
     current_piece.update_position(new_position)
   end
 
 end
-
-board = Board.new
-board.render
