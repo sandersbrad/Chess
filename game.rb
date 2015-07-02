@@ -15,8 +15,7 @@ class Game
   end
 
   def play
-    # until board.checkmate?(current_player.color)
-    10.times do
+    until board.checkmate?(current_player.color)
       display.render
       puts "#{current_player.name}'s turn.'"
       begin

@@ -5,8 +5,8 @@ require 'byebug'
 
 class Board
   WHITE_POSITIONS = {
-    "K" => [[0, 3]],
-    "Q" => [[0, 4]],
+    "K" => [[0, 4]],
+    "Q" => [[0, 3]],
     "B" => [[0, 2], [0, 5]],
     "N" => [[0, 1], [0, 6]],
     "R" => [[0, 0], [0, 7]],
@@ -14,8 +14,8 @@ class Board
   }
 
   BLACK_POSITIONS = {
-    "K" => [[7, 3]],
-    "Q" => [[7, 4]],
+    "K" => [[7, 4]],
+    "Q" => [[4, 1]],
     "B" => [[7, 2], [7, 5]],
     "N" => [[7, 1], [7, 6]],
     "R" => [[7, 0], [7, 7]],
@@ -73,6 +73,8 @@ class Board
       raise NotYourPiece.new "That is not your piece, idiot!"
     elsif !valid_move?(position, new_position, color)
       raise InvalidMove.new "You cannot put yourself in check!"
+    elsif !self[position].possible_moves.include?(new_position)
+      raise InvalidMove.new "You cannot move here"
     else
       move_piece!(position, new_position)
     end

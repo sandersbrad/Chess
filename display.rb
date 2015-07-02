@@ -71,6 +71,11 @@ class Display
     else
       string = string.colorize(:background => :blue)
     end
+
+    if debug_mode
+      # piece = board.piece_at(position)
+      string = string.colorize(:background => :green) if board[cursor].possible_moves.include?(position)
+    end
     print string
   end
 
@@ -96,7 +101,6 @@ class Display
     # puts "Checkmate?: #{board.checkmate?(:white) || board.checkmate?(:black)}"
     puts "Object Class: #{board[cursor].class}"
     puts "Current Player: #{game.current_player.name}"
-
   end
 end
 

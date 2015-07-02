@@ -51,7 +51,7 @@ class Piece
 
   def possible_moves
     moves_in_range.select do |move|
-      debugger if move.is_a?(Fixnum)
+      # debugger if move.is_a?(Fixnum)
       board.in_bounds?(move) && !self_blocking?(move)
     end
   end
@@ -62,7 +62,6 @@ class Piece
     self.vectors.each do |vector|
       moves += moves_from_vector(vector)
     end
-
     moves
   end
 
@@ -77,13 +76,13 @@ end
 class SlidingPiece < Piece
 
   def moves_from_vector(vector)
-    debugger if self.is_a?(Queen)
+  #   debugger if self.is_a?(Queen) && self.color == :black && vector == [0,1]
     vector_moves = []
 
     i = 1
     loop do
-      vector = vector.map {|x| x*i }
-      move = step(vector)
+      new_vector = vector.map {|x| x*i }
+      move = step(new_vector)
       i += 1
       break if !board.in_bounds?(move)
       vector_moves << move
@@ -111,7 +110,7 @@ class King < SteppingPiece
   end
 
   def symbol
-    color == :black ? "\u265A" : "\u2654"
+    color == :black ? "\u265B" : "\u2655"
   end
 
 end
@@ -124,7 +123,7 @@ class Queen < SlidingPiece
   end
 
   def symbol
-    color == :black ? "\u265B" : "\u2655"
+    color == :black ? "\u265A" : "\u2654"
   end
 
 end
