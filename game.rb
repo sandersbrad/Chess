@@ -11,11 +11,12 @@ class Game
     @display = Display.new(board, self)
     @player1 = Player.new("Lisa", :white, display, board)
     @player2 = Player.new("Brad", :black, display, board)
-    @current_player = player1
+    @current_player = player2
   end
 
   def play
-    5.times do
+    # until board.checkmate?(current_player.color)
+    10.times do
       display.render
       puts "#{current_player.name}'s turn.'"
       begin

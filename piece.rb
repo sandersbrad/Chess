@@ -10,10 +10,10 @@ class Piece
                  [1, -1],
                  [-1, -1]]
 
-  VECTORS = []
+  # VECTORS = DIAG_VECTORS
 
   attr_reader :color, :board
-  attr_accessor :captured, :moved, :position
+  attr_accessor :captured, :moved, :position, :vectors
 
   def initialize(position, color, board)
     @position = position
@@ -23,13 +23,14 @@ class Piece
   end
 
   def self_blocking?(move)
-    color == board.piece_at(move).color
+    this_piece = board.piece_at(move)
+    return false unless this_piece.piece?
+    color == this_piece.color
   end
 
   def to_s
     "Class: #{self.class}, Position: #{position}, Color: #{color}"
   end
-
 
   def empty?
     false
@@ -50,6 +51,7 @@ class Piece
 
   def possible_moves
     moves_in_range.select do |move|
+      debugger if move.is_a?(Fixnum)
       board.in_bounds?(move) && !self_blocking?(move)
     end
   end
@@ -57,7 +59,7 @@ class Piece
   def moves_in_range
     moves = []
 
-    VECTORS.each do |vector|
+    self.vectors.each do |vector|
       moves += moves_from_vector(vector)
     end
 
@@ -75,11 +77,12 @@ end
 class SlidingPiece < Piece
 
   def moves_from_vector(vector)
+    debugger if self.is_a?(Queen)
     vector_moves = []
 
     i = 1
     loop do
-      vector = vector.map {|x| x*2 }
+      vector = vector.map {|x| x*i }
       move = step(vector)
       i += 1
       break if !board.in_bounds?(move)
@@ -95,13 +98,17 @@ end
 class SteppingPiece < Piece
 
   def moves_from_vector(vector)
-    step(vector)
+    [step(vector)]
   end
 
 end
 
 class King < SteppingPiece
-  VECTORS = HV_VECTORS + DIAG_VECTORS
+
+  def initialize(position, color, board)
+    @vectors = HV_VECTORS + DIAG_VECTORS
+    super(position, color, board)
+  end
 
   def symbol
     color == :black ? "\u265A" : "\u2654"
@@ -110,7 +117,11 @@ class King < SteppingPiece
 end
 
 class Queen < SlidingPiece
-  VECTORS = HV_VECTORS + DIAG_VECTORS
+
+  def initialize(position, color, board)
+    @vectors = HV_VECTORS + DIAG_VECTORS
+    super(position, color, board)
+  end
 
   def symbol
     color == :black ? "\u265B" : "\u2655"
@@ -119,7 +130,12 @@ class Queen < SlidingPiece
 end
 
 class Rook < SlidingPiece
-  VECTORS = HV_VECTORS
+
+  def initialize(position, color, board)
+    @vectors = HV_VECTORS
+    super(position, color, board)
+  end
+
   def symbol
     color == :black ? "\u265C" : "\u2656"
   end
@@ -127,7 +143,11 @@ class Rook < SlidingPiece
 end
 
 class Bishop < SlidingPiece
-  VECTORS = DIAG_VECTORS
+
+  def initialize(position, color, board)
+    @vectors = DIAG_VECTORS
+    super(position, color, board)
+  end
   def symbol
     color == :black ? "\u265D" : "\u2657"
   end
@@ -135,7 +155,7 @@ class Bishop < SlidingPiece
 end
 
 class Knight < SteppingPiece
-  VECTORS = [[2,1],
+  L_VECTORS = [[2,1],
                [-2,1],
                [2,-1],
                [-2,-1],
@@ -144,20 +164,25 @@ class Knight < SteppingPiece
                [-1,2],
                [-1,-2]]
 
-  def symbol
+   def initialize(position, color, board)
+     @vectors = L_VECTORS
+     super(position, color, board)
+   end
+
+   def symbol
     color == :black ? "\u265E" : "\u2658"
   end
 
 end
 
 class Pawn < SteppingPiece
-  VECTORS = HV_VECTORS + DIAG_VECTORS
-  def symbol
-    color == :black ? "\u265F" : "\u2659"
+  def initialize(position, color, board)
+    @vectors = HV_VECTORS + DIAG_VECTORS
+    super(position, color, board)
   end
 
-  def potential_moves
-
+  def symbol
+    color == :black ? "\u265F" : "\u2659"
   end
 
 end

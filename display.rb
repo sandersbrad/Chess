@@ -93,7 +93,7 @@ class Display
     puts "Current Piece Possible Moves: #{board[cursor].possible_moves}"
     puts "Black in check?: #{board.in_check?(:black)}"
     puts "White in check?: #{board.in_check?(:white)}"
-    puts "Checkmate?: #{board.checkmate?(:white) || board.checkmate?(:black)}"
+    # puts "Checkmate?: #{board.checkmate?(:white) || board.checkmate?(:black)}"
     puts "Object Class: #{board[cursor].class}"
     puts "Current Player: #{game.current_player.name}"
 

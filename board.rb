@@ -108,7 +108,6 @@ class Board
 
   def in_check?(color)
     my_king = find_king(color)
-
     opponent_pieces = find_pieces(opponent(color))
 
     opponent_pieces.each do |piece|
