@@ -1,4 +1,4 @@
-require 'byebug'
+
 class Employee
   attr_accessor :salary
 

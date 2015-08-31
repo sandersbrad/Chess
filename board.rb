@@ -1,8 +1,9 @@
 require_relative 'empty_square.rb'
 require_relative 'piece.rb'
 require_relative 'error.rb'
-require 'byebug'
 
+
+#this is a test
 class Board
   WHITE_POSITIONS = {
     "K" => [[0, 4]],
@@ -15,7 +16,7 @@ class Board
 
   BLACK_POSITIONS = {
     "K" => [[7, 4]],
-    "Q" => [[4, 1]],
+    "Q" => [[7, 3]],
     "B" => [[7, 2], [7, 5]],
     "N" => [[7, 1], [7, 6]],
     "R" => [[7, 0], [7, 7]],

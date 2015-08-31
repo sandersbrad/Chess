@@ -2,7 +2,6 @@ require 'io/console'
 require 'colorize'
 require_relative 'board.rb'
 require_relative 'empty_square.rb'
-require 'byebug'
 
 class Display
   WASD_DIFFS = {
