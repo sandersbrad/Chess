@@ -12,6 +12,7 @@ class Player
     @color = color
     @display = display
     @board = board
+    @captured_pieces = []
   end
 
   def ==(other_player)

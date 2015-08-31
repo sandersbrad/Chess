@@ -25,8 +25,8 @@ class Display
   end
 
   def select_square
-      move_cursor
-      cursor
+    move_cursor
+    cursor
   end
 
   def render
