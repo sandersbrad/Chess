@@ -213,6 +213,8 @@ class Pawn < Piece
     if board.in_bounds?(new_position) && !board.occupied?(new_position)
       vector_moves << step(vector)
     end
+
+    vector_moves
   end
 
   def symbol

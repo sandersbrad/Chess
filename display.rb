@@ -49,7 +49,12 @@ class Display
       next unless valid_input?(input)
       delta = WASD_DIFFS[input]
       break if delta == [0,0]
-      self.cursor = add_coordinates(cursor, delta)
+      if !add_coordinates(cursor, delta)[0].between?(0, 7) ||
+         !add_coordinates(cursor, delta)[1].between?(0, 7)
+        next
+      else
+        self.cursor = add_coordinates(cursor, delta)
+      end
     end
   end
 

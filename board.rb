@@ -70,8 +70,10 @@ class Board
   end
 
   def move(position, new_position, color)
-    if color != self[position].color
-      raise NotYourPiece.new "That is not your piece, idiot!"
+    if self[position].empty?
+      raise InvalidMove.new "Select a piece"
+    elsif color != self[position].color
+      raise NotYourPiece.new "That is not your piece"
     elsif !valid_move?(position, new_position, color)
       raise InvalidMove.new "You cannot put yourself in check!"
     elsif !self[position].possible_moves.include?(new_position)
@@ -82,6 +84,7 @@ class Board
   end
 
   def valid_move?(position, new_position, color)
+    return false if self[position].empty?
     dup = duped_board
     dup.move_piece!(position, new_position)
     !dup.in_check?(color)

@@ -31,6 +31,9 @@ class Game
       display.error_message = nil
       switch_players
     end
+
+    display.render
+    puts "Checkmate!"
   end
 
   def switch_players

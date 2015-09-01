@@ -8,6 +8,9 @@ class EmptySquare
     false
   end
 
+  def color
+  end
+
   def symbol
     " "
   end

@@ -13,12 +13,14 @@ class ComputerPlayer
   end
 
   def take_turn
-    if check_mate_options.length > 0
-      move = check_mate_options[0]
+    if board.in_check?(color)
+      move = move_out_of_check.sample
+    elsif check_mate_options.length > 0
+      move = check_mate_options.sample
     elsif check_options.length > 0
-      move = check_options[0]
+      move = check_options.sample
     elsif take_piece_options.length > 0
-      move = take_piece_options[0]
+      move = take_piece_options.sample
     else
       move = all_possible_moves.sample
     end
@@ -35,6 +37,17 @@ class ComputerPlayer
     pieces.each do |piece|
       piece.possible_moves.each do |move|
         moves << [piece.position, move]
+      end
+    end
+    moves
+  end
+
+  def move_out_of_check
+    moves = []
+    king = board.find_king(color)
+    king.possible_moves.each do |move|
+      if board.valid_move?(move)
+        moves << move
       end
     end
     moves
