@@ -3,7 +3,7 @@ class ComputerPlayer
 
   attr_accessor :display, :e
   attr_reader :board, :color, :name
-  
+
   def initialize(name, color, display, board)
     @name = name
     @color = color
@@ -61,7 +61,7 @@ class ComputerPlayer
         new_position = move
         duped.move_piece!(position, new_position)
         if @board.in_check?(@opponent)
-          moves << [piece.position, move]
+          moves << [position, move]
         end
       end
     end
