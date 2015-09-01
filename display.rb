@@ -38,6 +38,7 @@ class Display
       end
       puts ""
     end
+    puts "Press 't' to terminate game"
     debug_mode_print if debug_mode
   end
 
@@ -46,6 +47,7 @@ class Display
       system('clear')
       render
       input = $stdin.getch
+      raise EndOfGame.new "Game Terminated" if input == 't'
       next unless valid_input?(input)
       delta = WASD_DIFFS[input]
       break if delta == [0,0]
@@ -59,7 +61,12 @@ class Display
   end
 
   def valid_input?(input)
-    WASD_DIFFS.keys.include?(input)
+    if WASD_DIFFS.keys.include?(input)
+      true
+    else
+      raise InvalidMove.new "Please use 'a,s,d,w' and 'enter'"
+      false
+    end
   end
 
   def add_coordinates(x, y)
@@ -69,11 +76,11 @@ class Display
   def render_square(string, position)
     string = " #{string}  "
     if position == cursor
-      string = string.colorize(:background => :yellow)
+      string = string.colorize(:background => :light_yellow)
     elsif alternated_color?(position)
-      string = string.colorize(:background => :red)
+      string = string.colorize(:background => :gray)
     else
-      string = string.colorize(:background => :blue)
+      string = string.colorize(:background => :white)
     end
 
     if debug_mode

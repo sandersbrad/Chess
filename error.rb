@@ -3,3 +3,6 @@ end
 
 class NotYourPiece < StandardError
 end
+
+class EndOfGame < StandardError
+end
