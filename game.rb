@@ -1,6 +1,7 @@
 require_relative 'board'
 require_relative 'display'
 require_relative 'player'
+require_relative 'computer_player'
 
 class Game
   attr_accessor :current_player
@@ -10,7 +11,7 @@ class Game
     @board = Board.new
     @display = Display.new(board, self)
     @player1 = Player.new("Lisa", :white, display, board)
-    @player2 = Player.new("Brad", :black, display, board)
+    @player2 = ComputerPlayer.new("Brad", :black, display, board)
     @current_player = player2
   end
 

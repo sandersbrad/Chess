@@ -61,7 +61,7 @@ class Board
 
   def duped_board
     deep_dup = Board.new(false)
-    deep_dup.grid.each_with_index do |row, row_index|
+    self.grid.each_with_index do |row, row_index|
       row.each_with_index do |tile, col_index|
         deep_dup[[row_index, col_index]] = tile.dup(deep_dup)
       end
@@ -93,7 +93,8 @@ class Board
 
     current_color_pieces.each do |piece|
       piece.possible_moves.each do |possible_move|
-        position, new_position = possible_move
+        position = piece.position
+        new_position = possible_move
         return false if valid_move?(position, new_position, color)
       end
     end
