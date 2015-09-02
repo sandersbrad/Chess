@@ -7,11 +7,11 @@ To play, clone the repository and run 'ruby game.rb'
 * The game will display all possible moves
 
 ### AI
-* Always move its opponent into checkmate or check if possible
-* Takes the opponents piece if no checkmate or check
+* Always moves its opponent into checkmate or check if possible
+* Takes the opponents piece if available
 * Moves itself out of check
 
-##How To Play
+## How To Play
 'wasd' moves the cursor up/left/down/right.  Enter selects the piece and enter again selects the position to move.  't' terminates the game.
 
 ## Implementation
