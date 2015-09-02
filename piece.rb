@@ -119,6 +119,7 @@ class Queen < SlidingPiece
 
   def initialize(position, color, board)
     @vectors = HV_VECTORS + DIAG_VECTORS
+    @value = 9
     super(position, color, board)
   end
 
@@ -132,6 +133,7 @@ class Rook < SlidingPiece
 
   def initialize(position, color, board)
     @vectors = HV_VECTORS
+    @value = 5
     super(position, color, board)
   end
 
@@ -145,6 +147,7 @@ class Bishop < SlidingPiece
 
   def initialize(position, color, board)
     @vectors = DIAG_VECTORS
+    @value = 3
     super(position, color, board)
   end
   def symbol
@@ -165,6 +168,7 @@ class Knight < SteppingPiece
 
    def initialize(position, color, board)
      @vectors = L_VECTORS
+     @value = 3
      super(position, color, board)
    end
 
@@ -176,6 +180,7 @@ end
 
 class Pawn < Piece
   def initialize(position, color, board)
+    @value = 1
     if color == :black
       @vectors = [[-1, 0]]
       @diags = [[-1, -1], [-1, 1]]
