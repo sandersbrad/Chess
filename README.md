@@ -1,21 +1,21 @@
 # Chess
-The classic strategy game that you can play in the terminal, implemented in Ruby.
-To play, download the repository and run <ruby chess.rb> from a terminal.
-* Only legal moves are allowed.
-* You can not move into check.
+Comnand line version of the classic strategy game.
+To play, clone the repository and run 'ruby game.rb'
 
-##To Play
-Use the keys "wasd" to navegate up/left/down/right on the display. Hit enter to select a piece, select a different square to move
-the piece. 
+### Human Player
+* You cannot move yourself into check
+* The game will display all possible moves
+
+### AI
+* Always moves its opponent into checkmate or check if possible
+* Takes the opponents piece if available
+* Moves itself out of check
+
+## How To Play
+'wasd' moves the cursor up/left/down/right.  Enter selects the piece and enter again selects the position to move.  't' terminates the game.
 
 ## Implementation
-Chess was implemented with an object-oriented approach in Ruby. There are separate classes for the Display, Board, Game, Pieces, and
-subclasses for types of pieces, including a subclass for empty squares. There are modules for stepping and sliding pieces. Preventing players from moving into check is done by creating a deep duplicate of the board, then checking if the duplicated board is in check.
-
-
-##Future improvements
-* Implement pawn promotion
-* Implement castling
+Chess utilizes object orientation and Ruby's class inheritence structure.  All pieces inherit from a 'Piece' class, then from either 'Slideable' or 'Steppable' classes.  The pawn only inherits from 'Piece' and carries it's own movement logic.  Game, Board, Player, ComputerPlayer, and Display all have their own class structure.
 
 
 
