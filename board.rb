@@ -1,9 +1,6 @@
-require_relative 'empty_square.rb'
-require_relative 'piece.rb'
+require_relative 'pieces/index'
 require_relative 'error.rb'
 
-
-#this is a test
 class Board
   WHITE_POSITIONS = {
     "K" => [[0, 4]],

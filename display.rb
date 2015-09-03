@@ -1,7 +1,6 @@
 require 'io/console'
 require 'colorize'
 require_relative 'board.rb'
-require_relative 'empty_square.rb'
 
 class Display
   WASD_DIFFS = {
@@ -19,9 +18,8 @@ class Display
     @board = board
     @game = game
     @cursor = [0,0]
-    @debug_mode = true
+    @debug_mode = false
     @error_message = nil
-    #debugger
   end
 
   def select_square
@@ -83,10 +81,7 @@ class Display
       string = string.colorize(:background => :white)
     end
 
-    if debug_mode
-      # piece = board.piece_at(position)
       string = string.colorize(:background => :green) if board[cursor].possible_moves.include?(position)
-    end
     print string
   end
 

@@ -20,7 +20,7 @@ class ComputerPlayer
     elsif check_options.length > 0
       move = check_options.sample
     elsif take_piece_options.length > 0
-      move = take_piece_options.sample
+      move = take_piece_options[-1]
     else
       move = all_possible_moves.sample
     end
@@ -62,7 +62,7 @@ class ComputerPlayer
         end
       end
     end
-    moves
+    moves.sort_by{|pos| board.piece_at(pos[0]).value}
   end
 
   def check_options
