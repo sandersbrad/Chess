@@ -21,6 +21,6 @@ All pieces are contained in their own files and required at once with a 'pieces/
 
 Game, Board, Player, ComputerPlayer, and Display all have their own class structure.
 
-* `system(clear)` and #render in a loop create 'live' terminal gameplay
+* `system(clear)` and `#render` in a loop create 'live' terminal gameplay
 * Custom error messages for clarity
 * Optional debug mode prints game-state information
