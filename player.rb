@@ -31,6 +31,6 @@ end
 if __FILE__ == $PROGRAM_NAME
     board = Board.new
     display = Display.new(board)
-    player = Player.new("Lisa", :white, display, board)
+    player = Player.new("Brad", :white, display, board)
     player.take_turn
 end
