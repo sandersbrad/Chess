@@ -1,3 +1,5 @@
+![Chess](/images/chess.png)
+
 # Chess
 Command line version of the classic strategy game.
 To play, clone the repository and run 'ruby game.rb'
