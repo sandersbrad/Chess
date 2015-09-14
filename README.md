@@ -1,5 +1,5 @@
 # Chess
-Comnand line version of the classic strategy game.
+Command line version of the classic strategy game.
 To play, clone the repository and run 'ruby game.rb'
 
 ### Human Player
